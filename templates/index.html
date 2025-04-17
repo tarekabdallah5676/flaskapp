@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Classification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 30px;
+            color: #333;
+        }
+
+        form {
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            width: 50%;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        input[type="file"] {
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .results {
+            margin-top: 30px;
+        }
+
+        .image-block {
+            display: inline-block;
+            margin: 20px;
+            text-align: center;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .image-block img {
+            max-width: 200px;
+            border-radius: 10px;
+        }
+
+        .result-text {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload Images for Classification</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="imagefile" multiple required>
+        <br>
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if predictions %}
+    <div class="results">
+        <h2>Results:</h2>
+        {% for pred in predictions %}
+        <div class="image-block">
+            <img src="{{ url_for('static', filename='images/' + pred.filename) }}" alt="{{ pred.filename }}">
+            <p class="result-text">{{ pred.result }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+</html>
+
